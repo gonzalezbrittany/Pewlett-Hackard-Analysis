@@ -210,3 +210,86 @@ Select * from dept_info where dept_name = ('Sales');
 
 --query for employees retiring in sales and development depts only
 select * from dept_info where dept_name in('Development', 'Sales');
+select * from employees;
+
+--Employee retirement table
+SELECT e.emp_no,
+e.first_name,
+e.last_name,
+t.title,
+t.from_date,
+t.to_date
+
+INTO retirement_titles
+FROM employees as e
+INNER JOIN title AS t
+ON (e.emp_no = t.emp_no)
+WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31')
+ORDER BY e.emp_no;
+
+
+
+
+
+-- Use Dictinct with Orderby to remove duplicate rows
+SELECT DISTINCT ON (e.emp_no) e.emp_no,
+e.first_name,
+e.last_name,
+t.title,
+t.from_date,
+t.to_date
+
+INTO unique_titles
+FROM employees as e
+INNER JOIN title AS t
+ON (e.emp_no = t.emp_no)
+WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31') 
+AND (t.to_date = '9999-01-01')
+ORDER BY e.emp_no, to_date desc;
+
+-- count of titles filled by employees who are retiring 
+SELECT count (ut.title), ut.title
+
+INTO retiring_titles
+FROM unique_titles as ut
+GROUP BY ut.title
+ORDER BY count desc;
+
+
+-- Mentorship-eligibility table for current employees
+SELECT DISTINCT ON (e.emp_no) e.emp_no,
+e.first_name,
+e.last_name,
+e.birth_date,
+de.from_date,
+de.to_date,
+t.title
+
+INTO mentorship_eligibility
+FROM employees as e
+INNER JOIN dept_emp AS de
+ON (e.emp_no = de.emp_no)
+INNER JOIN title as t
+on (e.emp_no = t.emp_no)
+WHERE (de.to_date = '9999-01-01')
+AND (e.birth_date BETWEEN '1965-01-01' AND '1965-12-31') 
+ORDER BY e.emp_no;
+
+-- count of overall retiring employees
+select count (title) from unique_titles;
+
+-- Mentorship elig vs total retiring number
+select count (title), title
+into uf
+from unique_titles
+group by title;
+
+select count (title), title
+into me
+from mentorship_eligibility
+group by title;
+
+SELECT uf.title, me.count, uf.count
+from me
+inner join uf
+on (uf.title = me.title);
