@@ -1,7 +1,7 @@
 # Pewlett-Hackard-Analysis
 
 ## Overview of the analysis: 
-Pewlett Hackard has several thousand employees, many of which are baby boomers who will be retiring soon. The company offers retiring packages for those who meeting certain criteria. Pewlett Hackard is prepping for those who will be retiring and would like a list showing who is retiring and how many positions need to be filled. SQL is utilized to create a company database and break down the data to answer these questions. 
+Pewlett Hackard has several thousand employees, many of which are baby boomers who will be retiring soon. The company offers retiring packages for those who meeting certain criteria. Pewlett Hackard is prepping for those who will be retiring and would like a list showing who is retiring and how many positions need to be filled. SQL is utilized to create a company database and break down the data to answer these questions. Further analysis was then completed to find how many employees will be retiring per title and how many of these qualify for the mentorship program.
 
 ## Results:
 To begin the analysis a table was first created to show all employees listed within the company, the beginning of the table is presented below.
